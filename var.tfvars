@@ -1,4 +1,4 @@
-var.region = "ap-south-1"
+var.aws_region = "ap-south-1"
 var.instance_type = "t2.micro"
 var.ami_id = "ami-02d26659fd82cf299"
 var.key_name = "auto1"
