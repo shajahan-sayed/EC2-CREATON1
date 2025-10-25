@@ -37,9 +37,11 @@ resource "aws_instance" "webinar" {
  subnet_id = var.subnet_id
  vpc_security_group_ids = [aws_security_group.terra.id]
  associate_public_ip_address = true
+
+ tags = {
+  name = "webinar"
+ }
 }
-tags = {
-name = "webinar"
-}
+
  
  
