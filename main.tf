@@ -45,7 +45,7 @@ resource "aws_instance" "role1" {
  ami = var.ami_id
  instance_type = var.instance_type
  key_name = var.key_name
- subnet_id - var.subnet_id
+ subnet_id = var.subnet_id
  vpc_security_group_ids = [aws_security_group.terra.id]
  associate_public_ip_adress = true
 
