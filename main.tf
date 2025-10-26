@@ -30,7 +30,7 @@ resource "aws_security_group" "terra" {
 }
 
 #creating ec2 instance
-resource "aws_instance" "webinar" {
+resource "aws_instance" "role2" {
  ami = var.ami_id
  instance_type = var.instance_type
  key_name = var.key_name
@@ -39,7 +39,18 @@ resource "aws_instance" "webinar" {
  associate_public_ip_address = true
 
  tags = {
-  name = "webinar"
+  name = "role2"
+ }
+resource "aws_instance" "role1" {
+ ami = var.ami_id
+ instance_type = var.instance_type
+ key_name = var.key_name
+ subnet_id - var.subnet_id
+ vpc_security_group_ids = [aws_security_group.terra.id]
+ associate_public_ip_adress = true
+
+ tags = { 
+    name = "role1"
  }
 }
 
