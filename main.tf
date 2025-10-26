@@ -41,6 +41,7 @@ resource "aws_instance" "role2" {
  tags = {
   name = "role2"
  }
+}
 resource "aws_instance" "role1" {
  ami = var.ami_id
  instance_type = var.instance_type
