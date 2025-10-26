@@ -30,7 +30,7 @@ resource "aws_security_group" "terra" {
 }
 
 #creating ec2 instance
-resource "aws_instance" "role2"{
+resource "aws_instance" "web-role2"{
  ami = var.ami_id
  instance_type = var.instance_type
  key_name = var.key_name
@@ -40,9 +40,9 @@ resource "aws_instance" "role2"{
 
    tags = {
     Name = "web-role2"
-  }
+   }
 }
-resource "aws_instance" "role1"{
+resource "aws_instance" "web-role1"{
  ami = var.ami_id
  instance_type = var.instance_type
  key_name = var.key_name
@@ -52,7 +52,7 @@ resource "aws_instance" "role1"{
 
    tags = {
     Name = "web-role1"
-  }
+   } 
 }
 
  
