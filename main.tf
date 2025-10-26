@@ -38,9 +38,9 @@ resource "aws_instance" "role2"{
  vpc_security_group_ids = [aws_security_group.terra.id]
  associate_public_ip_address = true
 
- tags = {
-  Name = "role2"
- }
+   tags = {
+    Name = "web-role2"
+  }
 }
 resource "aws_instance" "role1"{
  ami = var.ami_id
@@ -50,9 +50,9 @@ resource "aws_instance" "role1"{
  vpc_security_group_ids = [aws_security_group.terra.id]
  associate_public_ip_address = true
 
- tags = { 
-    Name = "role1"
- }
+   tags = {
+    Name = "web-role1"
+  }
 }
 
  
