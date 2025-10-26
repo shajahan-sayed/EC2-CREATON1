@@ -25,7 +25,7 @@ resource "aws_security_group" "terra" {
   cidr_blocks = ["0.0.0.0/0"]
  }
  tags = {
-  name = "terra"
+  Name = "terra"
  }
 }
 
@@ -39,7 +39,7 @@ resource "aws_instance" "role2"{
  associate_public_ip_address = true
 
  tags = {
-  name = "role2"
+  Name = "role2"
  }
 }
 resource "aws_instance" "role1"{
@@ -51,7 +51,7 @@ resource "aws_instance" "role1"{
  associate_public_ip_address = true
 
  tags = { 
-    name = "role1"
+    Name = "role1"
  }
 }
 
