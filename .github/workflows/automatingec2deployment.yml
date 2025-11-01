@@ -17,10 +17,6 @@ on:
           - apply
           - destroy
 
-permissions:
-  contents: read
-  id-token: write     # Needed for AWS OIDC authentication
-  pull-requests: write
 
 jobs:
   terraform:
