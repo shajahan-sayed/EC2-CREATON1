@@ -1,10 +1,10 @@
 name: 🏗️ Terraform Deploy to AWS --
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
   # workflow_dispatch:   # ✅ Manual trigger from GitHub Actions tab
   workflow_dispatch:
     inputs:
@@ -33,16 +33,6 @@ jobs:
       # -----------------------------
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
-
-      # -----------------------------
-      # Step 2. Configure AWS Credentials via OIDC
-      # -----------------------------
-      - name: 🔑 Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<YOUR_GITHUB_ROLE>
-          aws-region: ${{ env.AWS_REGION }}
-
       # -----------------------------
       # Step 3. Setup Terraform
       # -----------------------------
@@ -50,6 +40,12 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.0
+
+      - name: 🔑 Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: AKIAQR5EO6LI6J4LKB7J
+          aws-secret-access-key: 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
 
       # -----------------------------
       # Step 4. Terraform Init
