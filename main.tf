@@ -1,4 +1,4 @@
-#creating security Group
+#creating security Groupoo
 resource "aws_security_group" "terra" {
  name = "terra"
  description = "creating SG group"
