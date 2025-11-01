@@ -1,1 +1,71 @@
+name: 🏗️ Terraform Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:   # ✅ Manual trigger from GitHub Actions tab
+
+permissions:
+  contents: read
+  id-token: write     # Needed for AWS OIDC authentication
+  pull-requests: write
+
+jobs:
+  terraform:
+    name: Terraform Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      TF_VAR_aws_region: us-east-1
+
+    steps:
+      # -----------------------------
+      # Step 1. Checkout repository
+      # -----------------------------
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Step 2. Configure AWS Credentials via OIDC
+      # -----------------------------
+      - name: 🔑 Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<YOUR_GITHUB_ROLE>
+          aws-region: ${{ env.AWS_REGION }}
+
+      # -----------------------------
+      # Step 3. Setup Terraform
+      # -----------------------------
+      - name: ⚙️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
+
+      # -----------------------------
+      # Step 4. Terraform Init
+      # -----------------------------
+      - name: 🪣 Terraform Init
+        run: terraform init
+
+      # -----------------------------
+      # Step 5. Terraform Validate
+      # -----------------------------
+      - name: ✅ Terraform Validate
+        run: terraform validate
+
+      # -----------------------------
+      # Step 6. Terraform Plan
+      # -----------------------------
+      - name: 📜 Terraform Plan
+        run: terraform plan
+
+      # -----------------------------
+      # Step 7. Terraform Apply (always runs)
+      # -----------------------------
+      - name: 🚀 Terraform Apply
+        run: terraform apply -auto-approve
 
