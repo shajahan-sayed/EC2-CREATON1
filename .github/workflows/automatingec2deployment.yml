@@ -6,6 +6,16 @@ on:
       - main
   pull_request:
   # workflow_dispatch:   # ✅ Manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Select Terraform action to perform"
+        required: true
+        default: "apply"
+        type: choice
+        options:
+          - apply
+          - destroy
 
 permissions:
   contents: read
