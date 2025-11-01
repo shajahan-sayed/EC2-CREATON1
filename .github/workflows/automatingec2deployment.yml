@@ -1,10 +1,10 @@
 name: 🏗️ Terraform Deploy to AWS --
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
   # workflow_dispatch:   # ✅ Manual trigger from GitHub Actions tab
   workflow_dispatch:
     inputs:
