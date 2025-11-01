@@ -1,1 +1,77 @@
+name: 💣 Terraform Destroy AWS Resources
+
+on:
+  push:
+    branches:
+      - main              # ✅ Automatically runs on push to main (optional)
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Select Terraform action"
+        required: true
+        default: "destroy"
+        type: choice
+        options:
+          - destroy
+
+permissions:
+  contents: read
+  id-token: write     # ✅ Required for AWS OIDC authentication
+
+jobs:
+  terraform_destroy:
+    name: Terraform ${{ github.event.inputs.action || 'destroy' }}
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      TF_VAR_aws_region: us-east-1
+
+    steps:
+      # -----------------------------
+      # Step 1. Checkout Repository
+      # -----------------------------
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Step 2. Configure AWS Credentials (OIDC)
+      # -----------------------------
+      - name: 🔑 Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<YOUR_GITHUB_ROLE>
+          aws-region: ${{ env.AWS_REGION }}
+
+      # -----------------------------
+      # Step 3. Setup Terraform
+      # -----------------------------
+      - name: ⚙️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
+
+      # -----------------------------
+      # Step 4. Terraform Init
+      # -----------------------------
+      - name: 🪣 Terraform Init
+        run: terraform init
+
+      # -----------------------------
+      # Step 5. Terraform Validate
+      # -----------------------------
+      - name: ✅ Terraform Validate
+        run: terraform validate
+
+      # -----------------------------
+      # Step 6. Terraform Plan Destroy
+      # -----------------------------
+      - name: 📜 Terraform Plan Destroy
+        run: terraform plan -destroy
+
+      # -----------------------------
+      # Step 7. Terraform Destroy (Auto Approve)
+      # -----------------------------
+      - name: 💣 Terraform Destroy
+        run: terraform destroy -auto-approve
 
